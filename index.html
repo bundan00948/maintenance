@@ -4,26 +4,111 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Maintenance | Games Universe</title>
-    <!-- Google Fonts: Nunito Bold + Titan One -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Titan+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- External games-universe CSS -->
-    <link rel="stylesheet" href="https://raw.githubusercontent.com/bundan00948/project-week/refs/heads/main/assets/css/games-universe.css">
     <style>
-        /* Force bold text and proper scroll */
+        /* ===== COMPLETE EMBEDDED CSS (no external dependencies) ===== */
+        
+        :root {
+            --bg-dark: #0A0C10;
+            --card-bg: #1A1F2A;
+            --neon-green: #2AFF9E;
+            --neon-pink: #FF3D6C;
+            --theme-grey: #8A9BB5;
+            --text-primary: #FFFFFF;
+            --text-secondary: #8A9BB5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
+            background-color: var(--bg-dark);
+            background-image: linear-gradient(165deg, #06080d 0%, #0b0f18 35%, #080a0f 70%, #0a1018 100%);
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            color: var(--text-primary);
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
+            position: relative;
             overflow-y: auto;
-            font-family: 'Nunito', sans-serif;
-            font-weight: 700;
             margin: 0;
             padding: 20px;
         }
-        
-        /* Simplified container */
+
+        /* Animated background layers */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: -3;
+            pointer-events: none;
+            background:
+                radial-gradient(ellipse 90% 55% at 15% 15%, rgba(42, 255, 158, 0.11), transparent 52%),
+                radial-gradient(ellipse 75% 50% at 92% 88%, rgba(255, 61, 108, 0.08), transparent 48%),
+                radial-gradient(ellipse 65% 45% at 48% 48%, rgba(66, 165, 245, 0.05), transparent 55%);
+            animation: siteAmbienceShift 18s ease-in-out infinite;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            pointer-events: none;
+            opacity: 0.5;
+            background-image:
+                linear-gradient(rgba(42, 255, 158, 0.042) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(42, 255, 158, 0.034) 1px, transparent 1px);
+            background-size: 175px 175px;
+            animation: siteGridSwim 14s ease-in-out infinite alternate;
+            mask-image: radial-gradient(ellipse 110% 85% at 50% 30%, black 0%, transparent 72%);
+        }
+
+        @keyframes siteAmbienceShift {
+            0%, 100% { transform: scale(1) translate(0, -2%); filter: hue-rotate(0deg); }
+            33% { transform: scale(1.08) translate(2%, -6%); filter: hue-rotate(8deg); }
+            66% { transform: scale(1.04) translate(-3%, -1%); filter: hue-rotate(-5deg); }
+        }
+
+        @keyframes siteGridSwim {
+            0% { transform: translate(0, 0) rotate(-4deg); }
+            100% { transform: translate(36px, -175px) rotate(4deg); }
+        }
+
+        /* Flowing checker background */
+        .flowing-checkers-bg {
+            position: fixed;
+            top: -14%;
+            left: -14%;
+            width: 128%;
+            height: 128%;
+            background-image: url('https://ac.blooket.com/@codeblooket/blooket-frontend-components/v0.2.45/assets/BlookCheckers-e975c505.png');
+            background-size: 460px 460px;
+            background-repeat: repeat;
+            opacity: 0.07;
+            pointer-events: none;
+            z-index: -1;
+            animation: checkerFlow 10s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
+        }
+
+        @keyframes checkerFlow {
+            0% {
+                background-position: 0 0;
+                transform: rotate(-2deg) scale(1.05);
+            }
+            100% {
+                background-position: 300px -1200px;
+                transform: rotate(2deg) scale(1.1);
+            }
+        }
+
+        /* Maintenance card */
         .maintenance-container {
             max-width: 600px;
             width: 100%;
@@ -32,24 +117,23 @@
             position: relative;
             animation: fadeIn 0.6s ease-out;
         }
-        
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
-        /* Clean card */
+
         .maintenance-card {
             background: rgba(12, 16, 22, 0.92);
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-radius: 32px;
             border: 1px solid rgba(42, 255, 158, 0.4);
             box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5);
             text-align: center;
             padding: 2.2rem 2rem;
         }
-        
-        /* Icon */
+
         .maintenance-icon {
             font-size: 3.5rem;
             background: linear-gradient(135deg, #2AFF9E, #FF3D6C);
@@ -58,8 +142,7 @@
             color: transparent;
             margin-bottom: 0.75rem;
         }
-        
-        /* Title */
+
         .maintenance-title {
             font-family: 'Titan One', 'Nunito', sans-serif;
             font-size: 2rem;
@@ -70,8 +153,7 @@
             margin: 0.25rem 0 0.5rem;
             letter-spacing: -0.5px;
         }
-        
-        /* Message text */
+
         .maintenance-message {
             color: #e0ecff;
             font-size: 1rem;
@@ -80,11 +162,11 @@
             font-weight: 700;
             text-align: left;
         }
-        
+
         .maintenance-message p {
             margin: 0.8rem 0;
         }
-        
+
         .highlight-date {
             color: #2AFF9E;
             font-weight: 900;
@@ -93,8 +175,7 @@
             padding: 0.1rem 0.4rem;
             border-radius: 8px;
         }
-        
-        /* Countdown */
+
         .countdown-grid {
             display: flex;
             justify-content: center;
@@ -102,7 +183,7 @@
             margin: 1.5rem 0 1rem;
             flex-wrap: wrap;
         }
-        
+
         .time-unit {
             background: rgba(0, 0, 0, 0.55);
             border-radius: 20px;
@@ -110,7 +191,7 @@
             min-width: 75px;
             border: 1px solid rgba(42, 255, 158, 0.35);
         }
-        
+
         .time-number {
             font-family: 'Titan One', monospace;
             font-size: 1.9rem;
@@ -118,7 +199,7 @@
             color: #2AFF9E;
             line-height: 1;
         }
-        
+
         .time-label {
             font-size: 0.65rem;
             text-transform: uppercase;
@@ -126,8 +207,7 @@
             font-weight: 800;
             color: #8ea3c9;
         }
-        
-        /* GitHub link */
+
         .github-link {
             display: inline-flex;
             align-items: center;
@@ -143,54 +223,25 @@
             font-size: 1rem;
             transition: all 0.25s ease;
         }
-        
+
         .github-link:hover {
             background: #2AFF9E;
             color: #0A0C10;
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(42, 255, 158, 0.3);
         }
-        
+
         .github-link i {
             font-size: 1.4rem;
         }
-        
-        /* Footer */
+
         .maintenance-footer {
             margin-top: 1.5rem;
             font-size: 0.7rem;
             color: #6a7c9e;
             font-weight: 700;
         }
-        
-        /* Flowing checker background (faster animation) */
-        .flowing-checkers-bg {
-            position: fixed;
-            top: -14%;
-            left: -14%;
-            width: 128%;
-            height: 128%;
-            background-image: url('https://ac.blooket.com/@codeblooket/blooket-frontend-components/v0.2.45/assets/BlookCheckers-e975c505.png');
-            background-size: 460px 460px;
-            background-repeat: repeat;
-            opacity: 0.07;
-            pointer-events: none;
-            z-index: -1;
-            animation: checkerFlow 10s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
-        }
-        
-        @keyframes checkerFlow {
-            0% {
-                background-position: 0 0;
-                transform: rotate(-2deg) scale(1.05);
-            }
-            100% {
-                background-position: 300px -1200px;
-                transform: rotate(2deg) scale(1.1);
-            }
-        }
-        
-        /* Responsive */
+
         @media (max-width: 550px) {
             .maintenance-card { padding: 1.5rem; }
             .maintenance-title { font-size: 1.6rem; }
@@ -217,15 +268,13 @@
                 <p>Thank you for your patience.</p>
             </div>
             
-            <!-- Countdown Timer to Saturday 00:00 UTC+8 -->
-            <div class="countdown-grid" id="countdownGrid">
+            <div class="countdown-grid">
                 <div class="time-unit"><div class="time-number" id="days">00</div><div class="time-label">DAYS</div></div>
                 <div class="time-unit"><div class="time-number" id="hours">00</div><div class="time-label">HOURS</div></div>
                 <div class="time-unit"><div class="time-number" id="minutes">00</div><div class="time-label">MINUTES</div></div>
                 <div class="time-unit"><div class="time-number" id="seconds">00</div><div class="time-label">SECONDS</div></div>
             </div>
             
-            <!-- Only GitHub link -->
             <a href="https://github.com/bundan00948" target="_blank" rel="noopener noreferrer" class="github-link">
                 <i class="fab fa-github"></i>
                 <span>bundan00948</span>
@@ -240,10 +289,9 @@
 
     <script>
         (function() {
-            // Target: Saturday 00:00 UTC+8 (which is Friday 16:00 UTC)
+            // Target: Saturday 00:00 UTC+8
             function getNextSaturdayUTC8() {
                 const now = new Date();
-                // Convert current time to UTC+8 for comparison
                 const nowUTC8 = new Date(now.getTime() + (8 * 60 * 60 * 1000));
                 const targetUTC8 = new Date(Date.UTC(
                     nowUTC8.getUTCFullYear(),
@@ -252,12 +300,10 @@
                     0, 0, 0, 0
                 ));
                 
-                // Get day of week in UTC+8 (0 = Sunday, 6 = Saturday)
                 let day = targetUTC8.getUTCDay();
                 let daysUntilSaturday = (day === 6) ? 0 : (6 - day + 7) % 7;
                 
-                // If today is Saturday but time has passed 00:00, go to next Saturday
-                if (daysUntilSaturday === 0 && nowUTC8.getUTCHours() >= 0 && nowUTC8.getUTCMinutes() >= 0) {
+                if (daysUntilSaturday === 0) {
                     const currentTimeMs = nowUTC8.getTime();
                     const targetTimeMs = targetUTC8.getTime();
                     if (currentTimeMs >= targetTimeMs) {
@@ -268,13 +314,11 @@
                 targetUTC8.setUTCDate(targetUTC8.getUTCDate() + daysUntilSaturday);
                 targetUTC8.setUTCHours(0, 0, 0, 0);
                 
-                // Convert back to UTC timestamp
                 return new Date(targetUTC8.getTime() - (8 * 60 * 60 * 1000));
             }
             
             let targetDate = getNextSaturdayUTC8();
             
-            // Format date for display (UTC+8)
             function formatTargetDate() {
                 const targetUTC8 = new Date(targetDate.getTime() + (8 * 60 * 60 * 1000));
                 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -309,10 +353,6 @@
             
             updateTimer();
             setInterval(updateTimer, 1000);
-            
-            // Ensure body scroll works
-            document.body.style.overflow = 'auto';
-            document.body.style.height = 'auto';
         })();
     </script>
 </body>
