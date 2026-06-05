@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Maintenance | Games Universe</title>
+    <!-- Google Fonts: Nunito Bold + Titan One -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Titan+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- External games-universe CSS -->
+    <link rel="stylesheet" href="https://raw.githubusercontent.com/bundan00948/project-week/refs/heads/main/assets/css/games-universe.css">
+    <style>
+        /* Force bold text and proper scroll */
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow-y: auto;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        /* Simplified container */
+        .maintenance-container {
+            max-width: 600px;
+            width: 100%;
+            margin: 2rem auto;
+            z-index: 20;
+            position: relative;
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Clean card */
+        .maintenance-card {
+            background: rgba(12, 16, 22, 0.92);
+            backdrop-filter: blur(20px);
+            border-radius: 32px;
+            border: 1px solid rgba(42, 255, 158, 0.4);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            padding: 2.2rem 2rem;
+        }
+        
+        /* Icon */
+        .maintenance-icon {
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, #2AFF9E, #FF3D6C);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.75rem;
+        }
+        
+        /* Title */
+        .maintenance-title {
+            font-family: 'Titan One', 'Nunito', sans-serif;
+            font-size: 2rem;
+            background: linear-gradient(120deg, #FFFFFF, #2AFF9E);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0.25rem 0 0.5rem;
+            letter-spacing: -0.5px;
+        }
+        
+        /* Message text */
+        .maintenance-message {
+            color: #e0ecff;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 1.8rem 0;
+            font-weight: 700;
+            text-align: left;
+        }
+        
+        .maintenance-message p {
+            margin: 0.8rem 0;
+        }
+        
+        .highlight-date {
+            color: #2AFF9E;
+            font-weight: 900;
+            background: rgba(42, 255, 158, 0.15);
+            display: inline-block;
+            padding: 0.1rem 0.4rem;
+            border-radius: 8px;
+        }
+        
+        /* Countdown */
+        .countdown-grid {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1.5rem 0 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .time-unit {
+            background: rgba(0, 0, 0, 0.55);
+            border-radius: 20px;
+            padding: 0.6rem 0.9rem;
+            min-width: 75px;
+            border: 1px solid rgba(42, 255, 158, 0.35);
+        }
+        
+        .time-number {
+            font-family: 'Titan One', monospace;
+            font-size: 1.9rem;
+            font-weight: 900;
+            color: #2AFF9E;
+            line-height: 1;
+        }
+        
+        .time-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 800;
+            color: #8ea3c9;
+        }
+        
+        /* GitHub link */
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(42, 255, 158, 0.12);
+            border: 1px solid rgba(42, 255, 158, 0.5);
+            border-radius: 60px;
+            padding: 10px 24px;
+            margin: 20px 0 10px;
+            text-decoration: none;
+            color: #2AFF9E;
+            font-weight: 800;
+            font-size: 1rem;
+            transition: all 0.25s ease;
+        }
+        
+        .github-link:hover {
+            background: #2AFF9E;
+            color: #0A0C10;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(42, 255, 158, 0.3);
+        }
+        
+        .github-link i {
+            font-size: 1.4rem;
+        }
+        
+        /* Footer */
+        .maintenance-footer {
+            margin-top: 1.5rem;
+            font-size: 0.7rem;
+            color: #6a7c9e;
+            font-weight: 700;
+        }
+        
+        /* Flowing checker background (faster animation) */
+        .flowing-checkers-bg {
+            position: fixed;
+            top: -14%;
+            left: -14%;
+            width: 128%;
+            height: 128%;
+            background-image: url('https://ac.blooket.com/@codeblooket/blooket-frontend-components/v0.2.45/assets/BlookCheckers-e975c505.png');
+            background-size: 460px 460px;
+            background-repeat: repeat;
+            opacity: 0.07;
+            pointer-events: none;
+            z-index: -1;
+            animation: checkerFlow 10s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
+        }
+        
+        @keyframes checkerFlow {
+            0% {
+                background-position: 0 0;
+                transform: rotate(-2deg) scale(1.05);
+            }
+            100% {
+                background-position: 300px -1200px;
+                transform: rotate(2deg) scale(1.1);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 550px) {
+            .maintenance-card { padding: 1.5rem; }
+            .maintenance-title { font-size: 1.6rem; }
+            .time-number { font-size: 1.4rem; }
+            .time-unit { min-width: 60px; padding: 0.4rem 0.5rem; }
+            .maintenance-message { font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated checker background -->
+    <div class="flowing-checkers-bg"></div>
+    
+    <div class="maintenance-container">
+        <div class="maintenance-card">
+            <div class="maintenance-icon">
+                <i class="fas fa-gear"></i>
+            </div>
+            <h1 class="maintenance-title">Scheduled Maintenance</h1>
+            
+            <div class="maintenance-message">
+                <p>We are currently performing scheduled maintenance to improve your experience. Our website will be temporarily unavailable.</p>
+                <p>Back online by <strong class="highlight-date" id="eta-datetime">Saturday, 00:00 UTC+8</strong>.</p>
+                <p>Thank you for your patience.</p>
+            </div>
+            
+            <!-- Countdown Timer to Saturday 00:00 UTC+8 -->
+            <div class="countdown-grid" id="countdownGrid">
+                <div class="time-unit"><div class="time-number" id="days">00</div><div class="time-label">DAYS</div></div>
+                <div class="time-unit"><div class="time-number" id="hours">00</div><div class="time-label">HOURS</div></div>
+                <div class="time-unit"><div class="time-number" id="minutes">00</div><div class="time-label">MINUTES</div></div>
+                <div class="time-unit"><div class="time-number" id="seconds">00</div><div class="time-label">SECONDS</div></div>
+            </div>
+            
+            <!-- Only GitHub link -->
+            <a href="https://github.com/bundan00948" target="_blank" rel="noopener noreferrer" class="github-link">
+                <i class="fab fa-github"></i>
+                <span>bundan00948</span>
+                <i class="fas fa-external-link-alt" style="font-size: 0.7rem;"></i>
+            </a>
+            
+            <div class="maintenance-footer">
+                <i class="fas fa-arrow-rotate-right"></i> Back online soon
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // Target: Saturday 00:00 UTC+8 (which is Friday 16:00 UTC)
+            function getNextSaturdayUTC8() {
+                const now = new Date();
+                // Convert current time to UTC+8 for comparison
+                const nowUTC8 = new Date(now.getTime() + (8 * 60 * 60 * 1000));
+                const targetUTC8 = new Date(Date.UTC(
+                    nowUTC8.getUTCFullYear(),
+                    nowUTC8.getUTCMonth(),
+                    nowUTC8.getUTCDate(),
+                    0, 0, 0, 0
+                ));
+                
+                // Get day of week in UTC+8 (0 = Sunday, 6 = Saturday)
+                let day = targetUTC8.getUTCDay();
+                let daysUntilSaturday = (day === 6) ? 0 : (6 - day + 7) % 7;
+                
+                // If today is Saturday but time has passed 00:00, go to next Saturday
+                if (daysUntilSaturday === 0 && nowUTC8.getUTCHours() >= 0 && nowUTC8.getUTCMinutes() >= 0) {
+                    const currentTimeMs = nowUTC8.getTime();
+                    const targetTimeMs = targetUTC8.getTime();
+                    if (currentTimeMs >= targetTimeMs) {
+                        daysUntilSaturday = 7;
+                    }
+                }
+                
+                targetUTC8.setUTCDate(targetUTC8.getUTCDate() + daysUntilSaturday);
+                targetUTC8.setUTCHours(0, 0, 0, 0);
+                
+                // Convert back to UTC timestamp
+                return new Date(targetUTC8.getTime() - (8 * 60 * 60 * 1000));
+            }
+            
+            let targetDate = getNextSaturdayUTC8();
+            
+            // Format date for display (UTC+8)
+            function formatTargetDate() {
+                const targetUTC8 = new Date(targetDate.getTime() + (8 * 60 * 60 * 1000));
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                const dateStr = targetUTC8.toLocaleDateString('en-US', options);
+                return `${dateStr}, 00:00 UTC+8`;
+            }
+            
+            const etaElement = document.getElementById('eta-datetime');
+            if (etaElement) {
+                etaElement.textContent = formatTargetDate();
+            }
+            
+            function updateTimer() {
+                const diff = targetDate.getTime() - new Date().getTime();
+                if (diff <= 0) {
+                    document.getElementById('days').innerText = '00';
+                    document.getElementById('hours').innerText = '00';
+                    document.getElementById('minutes').innerText = '00';
+                    document.getElementById('seconds').innerText = '00';
+                    return;
+                }
+                const total = Math.floor(diff / 1000);
+                const days = Math.floor(total / 86400);
+                const hours = Math.floor((total % 86400) / 3600);
+                const mins = Math.floor((total % 3600) / 60);
+                const secs = total % 60;
+                document.getElementById('days').innerText = days < 10 ? '0' + days : days;
+                document.getElementById('hours').innerText = hours < 10 ? '0' + hours : hours;
+                document.getElementById('minutes').innerText = mins < 10 ? '0' + mins : mins;
+                document.getElementById('seconds').innerText = secs < 10 ? '0' + secs : secs;
+            }
+            
+            updateTimer();
+            setInterval(updateTimer, 1000);
+            
+            // Ensure body scroll works
+            document.body.style.overflow = 'auto';
+            document.body.style.height = 'auto';
+        })();
+    </script>
+</body>
+</html>
