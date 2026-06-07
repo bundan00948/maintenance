@@ -264,7 +264,7 @@
             
             <div class="maintenance-message">
                 <p>We are currently performing scheduled maintenance to improve your experience. Our website will be temporarily unavailable.</p>
-                <p>Back online by <strong class="highlight-date" id="eta-datetime">Saturday, 00:00 UTC+8</strong>.</p>
+                <p>Back online by <strong class="highlight-date" id="eta-datetime">June 25, 12:00 PM UTC+8</strong>.</p>
                 <p>Thank you for your patience.</p>
             </div>
             
@@ -289,50 +289,17 @@
 
     <script>
         (function() {
-            // Target: Saturday 00:00 UTC+8
-            function getNextSaturdayUTC8() {
-                const now = new Date();
-                const nowUTC8 = new Date(now.getTime() + (8 * 60 * 60 * 1000));
-                const targetUTC8 = new Date(Date.UTC(
-                    nowUTC8.getUTCFullYear(),
-                    nowUTC8.getUTCMonth(),
-                    nowUTC8.getUTCDate(),
-                    0, 0, 0, 0
-                ));
-                
-                let day = targetUTC8.getUTCDay();
-                let daysUntilSaturday = (day === 6) ? 0 : (6 - day + 7) % 7;
-                
-                if (daysUntilSaturday === 0) {
-                    const currentTimeMs = nowUTC8.getTime();
-                    const targetTimeMs = targetUTC8.getTime();
-                    if (currentTimeMs >= targetTimeMs) {
-                        daysUntilSaturday = 7;
-                    }
-                }
-                
-                targetUTC8.setUTCDate(targetUTC8.getUTCDate() + daysUntilSaturday);
-                targetUTC8.setUTCHours(0, 0, 0, 0);
-                
-                return new Date(targetUTC8.getTime() - (8 * 60 * 60 * 1000));
-            }
+            // Fixed target: June 25, 2026, 12:00 PM UTC+8 (04:00 UTC)
+            const targetDate = new Date(Date.UTC(2026, 5, 25, 4, 0, 0));
             
-            let targetDate = getNextSaturdayUTC8();
-            
-            function formatTargetDate() {
-                const targetUTC8 = new Date(targetDate.getTime() + (8 * 60 * 60 * 1000));
-                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                const dateStr = targetUTC8.toLocaleDateString('en-US', options);
-                return `${dateStr}, 00:00 UTC+8`;
-            }
-            
+            // Static display for the ETA
             const etaElement = document.getElementById('eta-datetime');
             if (etaElement) {
-                etaElement.textContent = formatTargetDate();
+                etaElement.textContent = 'June 25, 12:00 PM UTC+8';
             }
             
             function updateTimer() {
-                const diff = targetDate.getTime() - new Date().getTime();
+                const diff = targetDate.getTime() - Date.now();
                 if (diff <= 0) {
                     document.getElementById('days').innerText = '00';
                     document.getElementById('hours').innerText = '00';
